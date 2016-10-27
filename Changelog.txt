@@ -1,0 +1,17 @@
+0.6
+- Added an option to switch servers between Google DNS and League NA server
+- Found a huge ass memory leak. Like, the app was growing 0.1MB every second. 
+So uh....now it doesn't do that
+- Fixed a bug where ping > 95 would result in a blank icon. I blame Taylor for that one.
+
+0.5.1
+- Made tray text pretty...er.
+- Tray number now changes to Orange when ping is > 80 and OrangeRed when ping is > 95
+- Added option to resize window just for you Austin
+- Included uninstall option 
+- I was in the middle of adding some other features when I figured out how to make text
+pretty so the radio buttons don't work yet, neither does the "Launch on Startup" option
+
+0.5
+- Added automatic generation of taskbar ping numbers
+
