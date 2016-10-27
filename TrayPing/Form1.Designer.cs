@@ -76,7 +76,7 @@
             this.launchOnStartupToolStripMenuItem,
             this.Exit_Option});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 120);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 142);
             // 
             // Show_Option
             // 
@@ -87,7 +87,6 @@
             // 
             // Settings_Option
             // 
-            this.Settings_Option.Enabled = false;
             this.Settings_Option.Name = "Settings_Option";
             this.Settings_Option.Size = new System.Drawing.Size(171, 22);
             this.Settings_Option.Text = "Settings";

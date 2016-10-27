@@ -146,6 +146,8 @@ namespace TrayPing
 
         public void UpdateIcon(int status)
         {
+            string statusPing = status.ToString();
+
             // Create a bitmap and draw text on it
             Bitmap bitmap = new Bitmap(16, 16);
             Graphics graphics = Graphics.FromImage(bitmap);
@@ -158,88 +160,15 @@ namespace TrayPing
             {
                 graphics.DrawString("E", new Font("Tahoma", 8), Brushes.Red, new PointF(0, 1));
             }
-            /*else if (status >= 0)
+            else if (status >= 0 && status < pingLow)
             {
-                graphics.DrawString("41", new Font("Tahoma", 8, FontStyle.Regular), Brushes.Lime, new PointF(0, 1));
-            }*/
-            else if (status <= 10)
-            {
-                graphics.DrawString("10", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
+                graphics.DrawString(statusPing, new Font("Tahoma", 8, FontStyle.Regular), colorLow, new PointF(0, 1));
             }
-            else if (status > 10 && status <= 15)
+            else if (status > pingLow && status <= pingMid)
             {
-                graphics.DrawString("15", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
+                graphics.DrawString(statusPing, new Font("Tahoma", 9, FontStyle.Regular), colorMedium, new PointF(0, 1));
             }
-            else if (status > 15 && status <= 20)
-            {
-                graphics.DrawString("20", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 20 && status <= 25)
-            {
-                graphics.DrawString("25", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 25 && status <= 30)
-            {
-                graphics.DrawString("30", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 30 && status <= 35)
-            {
-                graphics.DrawString("35", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 35 && status <= 40)
-            {
-                graphics.DrawString("40", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 40 && status <= 45)
-            {
-                graphics.DrawString("45", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 45 && status <= 50)
-            {
-                graphics.DrawString("50", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 50 && status <= 55)
-            {
-                graphics.DrawString("55", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 55 && status <= 60)
-            {
-                graphics.DrawString("60", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 60 && status <= 65)
-            {
-                graphics.DrawString("65", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 65 && status <= 70)
-            {
-                graphics.DrawString("70", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 70 && status <= 75)
-            {
-                graphics.DrawString("75", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 85 && status <= 80)
-            {
-                graphics.DrawString("80", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 80 && status <= 85)
-            {
-                graphics.DrawString("85", new Font("Tahoma", 8), colorLow, new PointF(0, 1));
-            }
-            else if (status > 85 && status <= 90)
-            {
-                graphics.DrawString("90", new Font("Tahoma", 8), colorMedium, new PointF(0, 1));
-            }
-            else if (status > 90 && status <= 95)
-            {
-                graphics.DrawString("95", new Font("Tahoma", 8), colorMedium, new PointF(0, 1));
-            }
-            else if (status > 95 && status <= 99)
-            {
-                graphics.DrawString("99", new Font("Tahoma", 8), colorMedium, new PointF(0, 1));
-            }
-
-            else if (status > 99)
+            else if (status > pingMid)
             {
                 graphics.DrawString("H", new Font("Tahoma", 8), colorHigh, new PointF(0, 1));
             }
