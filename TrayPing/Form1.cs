@@ -14,8 +14,6 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
-// Figure out why windows task bar is freezing when closing app to tray
-// Integrate Sparkle to auto update
 // Add basic tray text color switch option
 // Add option to enter custom IP to ping
 
@@ -144,6 +142,10 @@ namespace TrayPing
             }
         }
 
+        // Used to destroy generated bitmaps after use
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        extern static bool DestroyIcon(IntPtr handle);
+
         public void UpdateIcon(int status)
         {
             string statusPing = status.ToString();
@@ -174,18 +176,21 @@ namespace TrayPing
             }
 
             // Convert the bitmap with text to an Icon
-            IntPtr hIcon = bitmap.GetHicon();
-            Icon icon = Icon.FromHandle(bitmap.GetHicon()); //hIcon);
+            IntPtr hicon = bitmap.GetHicon();
+            Icon icon = Icon.FromHandle(hicon); // Used to be: Icon icon = Icon.FromHandle(bitmap.GetHicon()); //hIcon);
+
+            notifyIcon1.Icon = icon;
 
             // Dispose used Objects
-            //
             graphics.Dispose();
             colorLow.Dispose();
             colorMedium.Dispose();
             colorHigh.Dispose();
             //ImageGraphics.Dispose();
 
-            notifyIcon1.Icon = icon;
+            // Destroy the Icon, since the form creates 
+            // its own copy of the icon.
+            DestroyIcon(icon.Handle);
         }
 
         private void pingUpdateTimer_Tick(object sender, EventArgs e)
