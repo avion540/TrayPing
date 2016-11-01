@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
+// Add ability to manually check for updates
 // Add basic tray text color switch option
 // Add option to enter custom IP to ping
 
@@ -60,17 +61,26 @@ namespace TrayPing
             [DllImport("WinSparkle.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
             public static extern void win_sparkle_set_appcast_url(String url);
             [DllImport("WinSparkle.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void win_sparkle_set_app_details(String company_name,
-                                                 String app_name,
-                                                 String app_version);
+            public static extern void win_sparkle_set_app_details(String company_name, String app_name, String app_version);
             [DllImport("WinSparkle.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
             public static extern void win_sparkle_set_registry_path(String path);
             [DllImport("WinSparkle.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern void win_sparkle_check_update_with_ui();
         }
 
+        // This delegate enables asynchronous calls for setting the text property on a TextBox control.
         delegate void SetTextCallBack(String text);
 
+        // This method demonstrates a pattern for making thread-safe
+        // calls on a Windows Forms control. 
+        //
+        // If the calling thread is different from the thread that
+        // created the TextBox control, this method creates a
+        // SetTextCallback and calls itself asynchronously using the
+        // Invoke method.
+        //
+        // If the calling thread is the same as the thread that created
+        // the TextBox control, the Text property is set directly. 
         private void SetText(String stuff)
         {
             if (this.pingLabel.InvokeRequired)
