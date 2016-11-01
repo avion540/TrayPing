@@ -42,13 +42,14 @@ namespace TrayPing
             InitializeComponent();
             UpdatePing();
 
-            // Attempting to implement Sparkle updater
+            // Integrate WinSparkle updater
             WinSparkle.win_sparkle_set_appcast_url("https://natechung.me/trayping/appcast.xml");
             //WinSparkle.win_sparkle_set_app_details("Company","App", "Version"); // THIS CALL NOT IMPLEMENTED YET
             WinSparkle.win_sparkle_init();
             WinSparkle.win_sparkle_check_update_with_ui();
         }
 
+        // Class for WinSparkle updater
         class WinSparkle
         {
             // Note that some of these functions are not implemented by WinSparkle YET.
@@ -82,25 +83,8 @@ namespace TrayPing
                 this.pingLabel.Text = stuff;
             }
         }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-            /*if (radioButton1.Checked)
-            {
-                ip1 = 8;
-                ip2 = 8;
-                ip3 = 8;
-                ip4 = 8;
-            }
-            if (radioButton2.Checked)
-            {
-                ip1 = 104;
-                ip2 = 160;
-                ip3 = 131;
-                ip4 = 1;
-            }*/
-        }
-
+        
+        // Ping a server
         private void UpdatePing()
         {
             using (Ping pingSender = new Ping()) // Set using to .Dispose Ping
@@ -111,7 +95,7 @@ namespace TrayPing
                 // but change the fragmentation behavior.
                 options.DontFragment = true;
 
-                // Create a buffer of 32 bytes of data to be transmitted. 
+                // Create buffer "test packet" to be transmitted. 
                 string data = "test packet";
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 int timeout = 120;
@@ -129,7 +113,7 @@ namespace TrayPing
                     {
                         if (showErrorBalloon == true)
                         {
-                            //pingLabel.Text = "Error";
+                            // pingLabel.Text = "Error";
                             notifyIcon1.ShowBalloonTip(5, "TrayPing",
                             "There was a problem while checking the ping.",
                             ToolTipIcon.Error);
@@ -145,50 +129,11 @@ namespace TrayPing
             }
         }
 
-            /*Ping pingSender = new Ping();
-            PingOptions options = new PingOptions();
-
-            // Use the default Ttl value which is 128, 
-            // but change the fragmentation behavior.
-            options.DontFragment = true;
-
-            // Create a buffer of 32 bytes of data to be transmitted. 
-            string data = "test packet";
-            byte[] buffer = Encoding.ASCII.GetBytes(data);
-            int timeout = 120;
-            PingReply reply = pingSender.Send(ip1 + "." + ip2 + "." + ip3 + "." + ip4, timeout, buffer, options);
-            if (reply.Status == IPStatus.Success)
-            {
-                SetText(reply.RoundtripTime + "ms");
-                notifyIcon1.Text = "Ping: " + reply.RoundtripTime + "";
-                UpdateIcon((int)reply.RoundtripTime);
-                error = 0;
-            }
-            else
-            {
-                if (error >= 10)
-                {
-                    if (showErrorBalloon == true)
-                    {
-                        //pingLabel.Text = "Error";
-                        notifyIcon1.ShowBalloonTip(5, "TrayPing",
-                        "There was a problem while checking the ping.",
-                        ToolTipIcon.Error);
-                    }
-
-                    showErrorBalloon = false;
-                    UpdateIcon(-1);
-                }
-                error++;
-            }
-            pingSender.Dispose();
-            ((IDisposable)pingSender).Dispose();
-        }*/
-
         // Used to destroy generated bitmaps after use
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
         extern static bool DestroyIcon(IntPtr handle);
 
+        // Create tray icon
         public void UpdateIcon(int status)
         {
             string statusPing = status.ToString();
@@ -220,7 +165,7 @@ namespace TrayPing
 
             // Convert the bitmap with text to an Icon
             IntPtr hicon = bitmap.GetHicon();
-            Icon icon = Icon.FromHandle(hicon); // Used to be: Icon icon = Icon.FromHandle(bitmap.GetHicon()); //hIcon);
+            Icon icon = Icon.FromHandle(hicon);
 
             notifyIcon1.Icon = icon;
 
@@ -229,20 +174,19 @@ namespace TrayPing
             colorLow.Dispose();
             colorMedium.Dispose();
             colorHigh.Dispose();
-            //ImageGraphics.Dispose();
 
-            // Destroy the Icon, since the form creates 
-            // its own copy of the icon.
+            // Destroy the Icon, since the form creates its own copy of the icon.
             DestroyIcon(icon.Handle);
         }
 
+        // Keeps pinging at interval of 1000ms (set in Designer)
         private void pingUpdateTimer_Tick(object sender, EventArgs e)
         {
             Thread t = new Thread(UpdatePing);
             t.Start();
-            //UpdatePing();
         }
 
+        // What happens when user closes main window
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Hide the main window and hide it from the taskbar.
@@ -270,6 +214,7 @@ namespace TrayPing
             }
         }
 
+        // What happens when user double clicks taskbar icon
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             // Unhide the main window and show it in the taskbar.
@@ -280,6 +225,7 @@ namespace TrayPing
             this.WindowState = FormWindowState.Normal;
         }
 
+        // Wait wut why is this here
         private void Show_Option_Click(object sender, EventArgs e)
         {
             // Unhide the main window and show it in the taskbar.
@@ -290,27 +236,31 @@ namespace TrayPing
             this.WindowState = FormWindowState.Normal;
         }
 
+        // What happens when user right clicks tray icon then, Exit
         private void Exit_Option_Click(object sender, EventArgs e)
         {
-            //Remove the icon from the system tray.
+            // Remove the icon from the system tray.
             notifyIcon1.Dispose();
             WinSparkle.win_sparkle_cleanup();
-            //Close the main Frame
+            // Close the main Frame
             Application.Exit();
         }
 
+        // Right click tray, Info
         private void Info_Option_Click(object sender, EventArgs e)
         {
-            //This is the text for the information popup.
-            MessageBox.Show("Ping will not be 100% accurate."
-            //+ "\nGreen L means your ping is <= "+pingLow+"\n"
-            + "\nOrange M means your ping is > 95ms" //+ pingLow + " && <= " + pingMid + "\n"
-            + "\nRed H means your ping is > 120ms" //+ pingMid + "\n"
+            // Get TrayPing version
+            string version = Application.ProductVersion;
+
+            // This is the text for the information popup.
+            MessageBox.Show("Version " + version
+            + "\nPing will not be 100% accurate."
+            + "\nOrange M means your ping is > " +pingLow 
+            + "\nRed H means your ping is > " + pingMid 
             + "\n\nErrors\nRed E means there was an error while trying to ping.\n");
-            //+ "The only error I've run into is where a firewall blocks the pings.\n"
-            //+ "If you're at a school it might not work correctly.");
         }
 
+        // Right click tray, Options
         private void Settings_Option_Click(object sender, EventArgs e)
         {
             int low = 80;
@@ -327,6 +277,7 @@ namespace TrayPing
             }
         }
 
+        // Results of user changing Options
         public static DialogResult InputBox(ref int low, ref int mid)
         {
             Form form = new Form();
@@ -406,11 +357,15 @@ namespace TrayPing
             return dialogResult;
         }
 
+        // Do not remove the classes below by hand. They are controlled by Design. Use Designer to add/remove more functions
+
+        // Main application window
         private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
 
+        // Radio button 1
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             ip1 = 8;
@@ -419,6 +374,7 @@ namespace TrayPing
             ip4 = 8;
         }
 
+        // Radio button 2
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             ip1 = 104;
@@ -427,8 +383,13 @@ namespace TrayPing
             ip4 = 1;
         }
 
+        // groupBox where radio buttons 1 & 2 are housed
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
+        }
 
+        // Right click, Launch on Startup
         private void launchOnStartupToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
