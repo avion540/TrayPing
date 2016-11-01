@@ -8,7 +8,8 @@ Built in Visual Studio 2015.
 
 ### How do I get set up? ###
 
-* N/A
+* Download WinSparkle dll from this release page (It will be in the Release folder) https://github.com/vslavik/winsparkle/releases
+* Put WinSparkle dll everywhere TrayPing.exe is/will be
 
 ### Contribution guidelines ###
 
