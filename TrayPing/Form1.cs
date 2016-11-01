@@ -24,10 +24,11 @@ namespace TrayPing
         // The variable used to show the message only once when the program gets closed to the system tray.
         Boolean showMinMessage = true;
 
-        int ip1 = 8;
-        int ip2 = 8;
-        int ip3 = 8;
-        int ip4 = 8;
+        // Set ip address to localhost to later be replaced with custom IP
+        int ip1 = 107;
+        int ip2 = 0;
+        int ip3 = 0;
+        int ip4 = 1;
 
         int error = 0;
         Boolean showErrorBalloon = true;
@@ -84,20 +85,20 @@ namespace TrayPing
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
+            /*if (radioButton1.Checked)
             {
                 ip1 = 8;
                 ip2 = 8;
                 ip3 = 8;
                 ip4 = 8;
             }
-            else if (radioButton2.Checked)
+            if (radioButton2.Checked)
             {
                 ip1 = 104;
                 ip2 = 160;
                 ip3 = 131;
                 ip4 = 1;
-            }
+            }*/
         }
 
         private void UpdatePing()
@@ -111,7 +112,7 @@ namespace TrayPing
                 options.DontFragment = true;
 
                 // Create a buffer of 32 bytes of data to be transmitted. 
-                string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                string data = "test packet";
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 int timeout = 120;
                 PingReply reply = pingSender.Send(ip1 + "." + ip2 + "." + ip3 + "." + ip4, timeout, buffer, options);
@@ -139,8 +140,50 @@ namespace TrayPing
                     }
                     error++;
                 }
+                pingSender.Dispose();
+                ((IDisposable)pingSender).Dispose();
             }
         }
+
+            /*Ping pingSender = new Ping();
+            PingOptions options = new PingOptions();
+
+            // Use the default Ttl value which is 128, 
+            // but change the fragmentation behavior.
+            options.DontFragment = true;
+
+            // Create a buffer of 32 bytes of data to be transmitted. 
+            string data = "test packet";
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            int timeout = 120;
+            PingReply reply = pingSender.Send(ip1 + "." + ip2 + "." + ip3 + "." + ip4, timeout, buffer, options);
+            if (reply.Status == IPStatus.Success)
+            {
+                SetText(reply.RoundtripTime + "ms");
+                notifyIcon1.Text = "Ping: " + reply.RoundtripTime + "";
+                UpdateIcon((int)reply.RoundtripTime);
+                error = 0;
+            }
+            else
+            {
+                if (error >= 10)
+                {
+                    if (showErrorBalloon == true)
+                    {
+                        //pingLabel.Text = "Error";
+                        notifyIcon1.ShowBalloonTip(5, "TrayPing",
+                        "There was a problem while checking the ping.",
+                        ToolTipIcon.Error);
+                    }
+
+                    showErrorBalloon = false;
+                    UpdateIcon(-1);
+                }
+                error++;
+            }
+            pingSender.Dispose();
+            ((IDisposable)pingSender).Dispose();
+        }*/
 
         // Used to destroy generated bitmaps after use
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -168,7 +211,7 @@ namespace TrayPing
             }
             else if (status > pingLow && status <= pingMid)
             {
-                graphics.DrawString(statusPing, new Font("Tahoma", 9, FontStyle.Regular), colorMedium, new PointF(0, 1));
+                graphics.DrawString(statusPing, new Font("Tahoma", 8, FontStyle.Regular), colorMedium, new PointF(0, 1));
             }
             else if (status > pingMid)
             {
@@ -219,7 +262,12 @@ namespace TrayPing
             }
 
             // e is the form closing event. e.cancel means it's canceling the form closing.
-            e.Cancel = true;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                notifyIcon1.Visible = true;
+                this.Hide();
+                e.Cancel = true;
+            }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -249,7 +297,6 @@ namespace TrayPing
             WinSparkle.win_sparkle_cleanup();
             //Close the main Frame
             Application.Exit();
-            
         }
 
         private void Info_Option_Click(object sender, EventArgs e)
@@ -386,7 +433,5 @@ namespace TrayPing
         {
 
         }
-
-        
     }
 }
