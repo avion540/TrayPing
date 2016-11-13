@@ -14,8 +14,11 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
+// Figure out where program is leaking handles
+// Add ability to manually check for updates
 // Add basic tray text color switch option
 // Add option to enter custom IP to ping
+// Add option to open application on startup
 
 namespace TrayPing
 {
@@ -49,7 +52,7 @@ namespace TrayPing
             WinSparkle.win_sparkle_check_update_with_ui();
         }
 
-        // Class for WinSparkle updater
+        // Import WinSparkle dll (make sure it is in the same folder as the application)
         class WinSparkle
         {
             // Note that some of these functions are not implemented by WinSparkle YET.
@@ -60,17 +63,26 @@ namespace TrayPing
             [DllImport("WinSparkle.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
             public static extern void win_sparkle_set_appcast_url(String url);
             [DllImport("WinSparkle.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void win_sparkle_set_app_details(String company_name,
-                                                 String app_name,
-                                                 String app_version);
+            public static extern void win_sparkle_set_app_details(String company_name, String app_name, String app_version);
             [DllImport("WinSparkle.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
             public static extern void win_sparkle_set_registry_path(String path);
             [DllImport("WinSparkle.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern void win_sparkle_check_update_with_ui();
         }
 
+        // This delegate enables asynchronous calls for setting the text property on a TextBox control.
         delegate void SetTextCallBack(String text);
 
+        // This method demonstrates a pattern for making thread-safe
+        // calls on a Windows Forms control. 
+        //
+        // If the calling thread is different from the thread that
+        // created the TextBox control, this method creates a
+        // SetTextCallback and calls itself asynchronously using the
+        // Invoke method.
+        //
+        // If the calling thread is the same as the thread that created
+        // the TextBox control, the Text property is set directly. 
         private void SetText(String stuff)
         {
             if (this.pingLabel.InvokeRequired)
@@ -99,33 +111,42 @@ namespace TrayPing
                 string data = "test packet";
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 int timeout = 120;
-                PingReply reply = pingSender.Send(ip1 + "." + ip2 + "." + ip3 + "." + ip4, timeout, buffer, options);
-                if (reply.Status == IPStatus.Success)
+                // Use try/catch blocks to prevent unhandled exceptions when TrayPing can't ping a server or when the computer goes to sleep
+                try
                 {
-                    SetText(reply.RoundtripTime + "ms");
-                    notifyIcon1.Text = "Ping: " + reply.RoundtripTime + "";
-                    UpdateIcon((int)reply.RoundtripTime);
-                    error = 0;
-                }
-                else
-                {
-                    if (error >= 10)
+                    PingReply reply = pingSender.Send(ip1 + "." + ip2 + "." + ip3 + "." + ip4, timeout, buffer, options);
+                    if (reply.Status == IPStatus.Success)
                     {
-                        if (showErrorBalloon == true)
-                        {
-                            // pingLabel.Text = "Error";
-                            notifyIcon1.ShowBalloonTip(5, "TrayPing",
-                            "There was a problem while checking the ping.",
-                            ToolTipIcon.Error);
-                        }
-
-                        showErrorBalloon = false;
-                        UpdateIcon(-1);
+                        SetText(reply.RoundtripTime + "ms");
+                        notifyIcon1.Text = "Ping: " + reply.RoundtripTime + "";
+                        UpdateIcon((int)reply.RoundtripTime);
+                        error = 0;
                     }
-                    error++;
+                    else
+                    {
+                        if (error >= 10)
+                        {
+                            if (showErrorBalloon == true)
+                            {
+                                // pingLabel.Text = "Error";
+                                notifyIcon1.ShowBalloonTip(5, "TrayPing",
+                                "There was a problem while checking the ping.",
+                                ToolTipIcon.Error);
+                            }
+
+                            showErrorBalloon = false;
+                            UpdateIcon(-1);
+                        }
+                        error++;
+                    }
+                    pingSender.Dispose();
+                    ((IDisposable)pingSender).Dispose();
                 }
-                pingSender.Dispose();
-                ((IDisposable)pingSender).Dispose();
+
+                catch (Exception except)
+                {
+
+                }
             }
         }
 
@@ -254,10 +275,12 @@ namespace TrayPing
 
             // This is the text for the information popup.
             MessageBox.Show("Version " + version
+            + "\n"
+            + "\n"
             + "\nPing will not be 100% accurate."
             + "\nOrange M means your ping is > " +pingLow 
             + "\nRed H means your ping is > " + pingMid 
-            + "\n\nErrors\nRed E means there was an error while trying to ping.\n");
+            + "\n\nErrors:\nRed E means there was an error while trying to ping.\n");
         }
 
         // Right click tray, Options
@@ -357,6 +380,8 @@ namespace TrayPing
             return dialogResult;
         }
 
+
+
         // Do not remove the classes below by hand. They are controlled by Design. Use Designer to add/remove more functions
 
         // Main application window
@@ -392,7 +417,16 @@ namespace TrayPing
         // Right click, Launch on Startup
         private void launchOnStartupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            /*RegistryKey registryKey = Registry.CurrentUser.OpenSubKey
+        ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (isChecked)
+            {
+                registryKey.SetValue("ApplicationName", Application.ExecutablePath);
+            }
+            else
+            {
+                registryKey.DeleteValue("ApplicationName");
+            }*/
         }
     }
 }
