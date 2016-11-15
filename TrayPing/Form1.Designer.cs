@@ -41,10 +41,19 @@
             this.Exit_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.pingUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.userCustomIP = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.userCustomIP1 = new System.Windows.Forms.NumericUpDown();
+            this.userCustomIP2 = new System.Windows.Forms.NumericUpDown();
+            this.userCustomIP3 = new System.Windows.Forms.NumericUpDown();
+            this.userCustomIP4 = new System.Windows.Forms.NumericUpDown();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP4)).BeginInit();
             this.SuspendLayout();
             // 
             // pingLabel
@@ -76,7 +85,7 @@
             this.launchOnStartupToolStripMenuItem,
             this.Exit_Option});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 142);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 120);
             // 
             // Show_Option
             // 
@@ -106,9 +115,7 @@
             // 
             // launchOnStartupToolStripMenuItem
             // 
-            this.launchOnStartupToolStripMenuItem.Checked = true;
             this.launchOnStartupToolStripMenuItem.CheckOnClick = true;
-            this.launchOnStartupToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.launchOnStartupToolStripMenuItem.Enabled = false;
             this.launchOnStartupToolStripMenuItem.Name = "launchOnStartupToolStripMenuItem";
             this.launchOnStartupToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
@@ -131,20 +138,37 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.userCustomIP4);
+            this.groupBox1.Controls.Add(this.userCustomIP3);
+            this.groupBox1.Controls.Add(this.userCustomIP2);
+            this.groupBox1.Controls.Add(this.userCustomIP1);
+            this.groupBox1.Controls.Add(this.userCustomIP);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(13, 47);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(282, 51);
+            this.groupBox1.Size = new System.Drawing.Size(282, 85);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select server to ping";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // userCustomIP
+            // 
+            this.userCustomIP.AutoSize = true;
+            this.userCustomIP.Location = new System.Drawing.Point(11, 52);
+            this.userCustomIP.Name = "userCustomIP";
+            this.userCustomIP.Size = new System.Drawing.Size(73, 17);
+            this.userCustomIP.TabIndex = 2;
+            this.userCustomIP.TabStop = true;
+            this.userCustomIP.Text = "Custom IP";
+            this.userCustomIP.UseVisualStyleBackColor = true;
+            this.userCustomIP.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(143, 19);
+            this.radioButton2.Location = new System.Drawing.Point(134, 19);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(135, 17);
             this.radioButton2.TabIndex = 1;
@@ -160,24 +184,76 @@
             this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(11, 19);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(127, 17);
+            this.radioButton1.Size = new System.Drawing.Size(77, 17);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Google DNS (8.8.8.8)";
+            this.radioButton1.Text = "Open DNS";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             this.radioButton1.Click += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
+            // userCustomIP1
+            // 
+            this.userCustomIP1.Location = new System.Drawing.Point(90, 52);
+            this.userCustomIP1.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP1.Name = "userCustomIP1";
+            this.userCustomIP1.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP1.TabIndex = 7;
+            this.userCustomIP1.ValueChanged += new System.EventHandler(this.userCustomIP1_ValueChanged);
+            // 
+            // userCustomIP2
+            // 
+            this.userCustomIP2.Location = new System.Drawing.Point(134, 52);
+            this.userCustomIP2.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP2.Name = "userCustomIP2";
+            this.userCustomIP2.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP2.TabIndex = 8;
+            this.userCustomIP2.ValueChanged += new System.EventHandler(this.userCustomIP2_ValueChanged);
+            // 
+            // userCustomIP3
+            // 
+            this.userCustomIP3.Location = new System.Drawing.Point(178, 52);
+            this.userCustomIP3.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP3.Name = "userCustomIP3";
+            this.userCustomIP3.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP3.TabIndex = 9;
+            this.userCustomIP3.ValueChanged += new System.EventHandler(this.userCustomIP3_ValueChanged);
+            // 
+            // userCustomIP4
+            // 
+            this.userCustomIP4.Location = new System.Drawing.Point(222, 52);
+            this.userCustomIP4.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP4.Name = "userCustomIP4";
+            this.userCustomIP4.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP4.TabIndex = 10;
+            this.userCustomIP4.ValueChanged += new System.EventHandler(this.userCustomIP4_ValueChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(307, 110);
+            this.ClientSize = new System.Drawing.Size(307, 143);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pingLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(323, 139);
+            this.MinimumSize = new System.Drawing.Size(323, 182);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrayPing";
@@ -186,6 +262,10 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,6 +286,11 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton userCustomIP;
+        private System.Windows.Forms.NumericUpDown userCustomIP4;
+        private System.Windows.Forms.NumericUpDown userCustomIP3;
+        private System.Windows.Forms.NumericUpDown userCustomIP2;
+        private System.Windows.Forms.NumericUpDown userCustomIP1;
     }
 }
 

@@ -14,7 +14,7 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
-// Figure out where program is leaking handles
+// Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
 // Add ability to manually check for updates
 // Add basic tray text color switch option
 // Add option to enter custom IP to ping
@@ -32,6 +32,11 @@ namespace TrayPing
         int ip2 = 0;
         int ip3 = 0;
         int ip4 = 1;
+
+        int userIP1 = 107;
+        int userIP2 = 0;
+        int userIP3 = 0;
+        int userIP4 = 1;
 
         int error = 0;
         Boolean showErrorBalloon = true;
@@ -393,10 +398,10 @@ namespace TrayPing
         // Radio button 1
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            ip1 = 8;
-            ip2 = 8;
-            ip3 = 8;
-            ip4 = 8;
+            ip1 = 208;
+            ip2 = 67;
+            ip3 = 222;
+            ip4 = 222;
         }
 
         // Radio button 2
@@ -406,6 +411,34 @@ namespace TrayPing
             ip2 = 160;
             ip3 = 131;
             ip4 = 1;
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            ip1 = userIP1;
+            ip2 = userIP2;
+            ip3 = userIP3;
+            ip4 = userIP4;
+        }
+
+        private void userCustomIP1_ValueChanged(object sender, EventArgs e)
+        {
+            userIP1 = (int)userCustomIP1.Value;
+        }
+
+        private void userCustomIP2_ValueChanged(object sender, EventArgs e)
+        {
+            userIP2 = (int)userCustomIP2.Value;
+        }
+
+        private void userCustomIP3_ValueChanged(object sender, EventArgs e)
+        {
+            userIP3 = (int)userCustomIP3.Value;
+        }
+
+        private void userCustomIP4_ValueChanged(object sender, EventArgs e)
+        {
+            userIP4 = (int)userCustomIP4.Value;
         }
 
         // groupBox where radio buttons 1 & 2 are housed
@@ -428,5 +461,7 @@ namespace TrayPing
                 registryKey.DeleteValue("ApplicationName");
             }*/
         }
+
+
     }
 }
