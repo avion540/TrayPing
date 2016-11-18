@@ -33,11 +33,11 @@
             this.pingLabel = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Show_Option = new System.Windows.Forms.ToolStripMenuItem();
-            this.Settings_Option = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Info_Option = new System.Windows.Forms.ToolStripMenuItem();
-            this.launchOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.Settings_Option = new System.Windows.Forms.ToolStripMenuItem();
+            this.Show_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.Exit_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.pingUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -48,6 +48,7 @@
             this.userCustomIP = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.launchOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userCustomIP4)).BeginInit();
@@ -78,33 +79,16 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Show_Option,
-            this.Settings_Option,
-            this.toolStripSeparator1,
             this.Info_Option,
+            this.checkForUpdateToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.Settings_Option,
+            this.Show_Option,
             this.launchOnStartupToolStripMenuItem,
             this.Exit_Option});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 120);
-            // 
-            // Show_Option
-            // 
-            this.Show_Option.Name = "Show_Option";
-            this.Show_Option.Size = new System.Drawing.Size(171, 22);
-            this.Show_Option.Text = "Show";
-            this.Show_Option.Click += new System.EventHandler(this.Show_Option_Click);
-            // 
-            // Settings_Option
-            // 
-            this.Settings_Option.Name = "Settings_Option";
-            this.Settings_Option.Size = new System.Drawing.Size(171, 22);
-            this.Settings_Option.Text = "Settings";
-            this.Settings_Option.Click += new System.EventHandler(this.Settings_Option_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 164);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // Info_Option
             // 
@@ -113,15 +97,31 @@
             this.Info_Option.Text = "Info";
             this.Info_Option.Click += new System.EventHandler(this.Info_Option_Click);
             // 
-            // launchOnStartupToolStripMenuItem
+            // checkForUpdateToolStripMenuItem
             // 
-            this.launchOnStartupToolStripMenuItem.CheckOnClick = true;
-            this.launchOnStartupToolStripMenuItem.Enabled = false;
-            this.launchOnStartupToolStripMenuItem.Name = "launchOnStartupToolStripMenuItem";
-            this.launchOnStartupToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.launchOnStartupToolStripMenuItem.Text = "Launch on Startup";
-            this.launchOnStartupToolStripMenuItem.Visible = false;
-            this.launchOnStartupToolStripMenuItem.Click += new System.EventHandler(this.launchOnStartupToolStripMenuItem_Click);
+            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
+            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.checkForUpdateToolStripMenuItem.Text = "Check for Update";
+            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
+            // 
+            // Settings_Option
+            // 
+            this.Settings_Option.Name = "Settings_Option";
+            this.Settings_Option.Size = new System.Drawing.Size(171, 22);
+            this.Settings_Option.Text = "Settings";
+            this.Settings_Option.Click += new System.EventHandler(this.Settings_Option_Click);
+            // 
+            // Show_Option
+            // 
+            this.Show_Option.Name = "Show_Option";
+            this.Show_Option.Size = new System.Drawing.Size(171, 22);
+            this.Show_Option.Text = "Show";
+            this.Show_Option.Click += new System.EventHandler(this.Show_Option_Click);
             // 
             // Exit_Option
             // 
@@ -244,6 +244,14 @@
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             this.radioButton1.Click += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
+            // launchOnStartupToolStripMenuItem
+            // 
+            this.launchOnStartupToolStripMenuItem.CheckOnClick = true;
+            this.launchOnStartupToolStripMenuItem.Name = "launchOnStartupToolStripMenuItem";
+            this.launchOnStartupToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.launchOnStartupToolStripMenuItem.Text = "Launch on Startup";
+            this.launchOnStartupToolStripMenuItem.Click += new System.EventHandler(this.launchOnStartupToolStripMenuItem_Click_1);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -282,7 +290,6 @@
         private System.Windows.Forms.ToolStripMenuItem Info_Option;
         private System.Windows.Forms.Timer pingUpdateTimer;
         private System.Windows.Forms.ToolStripMenuItem Settings_Option;
-        private System.Windows.Forms.ToolStripMenuItem launchOnStartupToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
@@ -291,6 +298,8 @@
         private System.Windows.Forms.NumericUpDown userCustomIP3;
         private System.Windows.Forms.NumericUpDown userCustomIP2;
         private System.Windows.Forms.NumericUpDown userCustomIP1;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem launchOnStartupToolStripMenuItem;
     }
 }
 
