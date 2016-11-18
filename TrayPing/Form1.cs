@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
+// Figure out why .net error is thrown after clicking Exit...sometimes.
 // Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
 // Add ability to manually check for updates
 // Add basic tray text color switch option
@@ -25,7 +26,7 @@ namespace TrayPing
     public partial class MainForm : Form
     {
         // The variable used to show the message only once when the program gets closed to the system tray.
-        Boolean showMinMessage = true;
+        bool showMinMessage = true;
 
         // Set ip address to localhost to later be replaced with custom IP
         int ip1 = 107;
@@ -39,7 +40,7 @@ namespace TrayPing
         int userIP4 = 1;
 
         int error = 0;
-        Boolean showErrorBalloon = true;
+        bool showErrorBalloon = true;
 
         //Ping low and mid
         int pingLow = 80;
@@ -174,7 +175,7 @@ namespace TrayPing
             // If the status is -1 that means there was an error trying to get the ping.
             if (status == -1)
             {
-                graphics.DrawString("E", new Font("Tahoma", 8), Brushes.Red, new PointF(0, 1));
+                graphics.DrawString("E", new Font("Tahoma", 8), Brushes.Red, new PointF(3, 1));
             }
             else if (status >= 0 && status < pingLow)
             {
@@ -186,7 +187,7 @@ namespace TrayPing
             }
             else if (status > pingMid)
             {
-                graphics.DrawString("H", new Font("Tahoma", 8), colorHigh, new PointF(0, 1));
+                graphics.DrawString("H", new Font("Tahoma", 8), colorHigh, new PointF(3, 1));
             }
 
             // Convert the bitmap with text to an Icon
@@ -251,7 +252,7 @@ namespace TrayPing
             this.WindowState = FormWindowState.Normal;
         }
 
-        // Wait wut why is this here
+        // Brings main window up when user clicks "Show" in the right-click menu
         private void Show_Option_Click(object sender, EventArgs e)
         {
             // Unhide the main window and show it in the taskbar.

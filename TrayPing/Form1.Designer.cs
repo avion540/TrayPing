@@ -41,19 +41,19 @@
             this.Exit_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.pingUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.userCustomIP4 = new System.Windows.Forms.NumericUpDown();
+            this.userCustomIP3 = new System.Windows.Forms.NumericUpDown();
+            this.userCustomIP2 = new System.Windows.Forms.NumericUpDown();
+            this.userCustomIP1 = new System.Windows.Forms.NumericUpDown();
             this.userCustomIP = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.userCustomIP1 = new System.Windows.Forms.NumericUpDown();
-            this.userCustomIP2 = new System.Windows.Forms.NumericUpDown();
-            this.userCustomIP3 = new System.Windows.Forms.NumericUpDown();
-            this.userCustomIP4 = new System.Windows.Forms.NumericUpDown();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userCustomIP4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP1)).BeginInit();
             this.SuspendLayout();
             // 
             // pingLabel
@@ -153,6 +153,58 @@
             this.groupBox1.Text = "Select server to ping";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // userCustomIP4
+            // 
+            this.userCustomIP4.Location = new System.Drawing.Point(222, 52);
+            this.userCustomIP4.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP4.Name = "userCustomIP4";
+            this.userCustomIP4.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP4.TabIndex = 10;
+            this.userCustomIP4.ValueChanged += new System.EventHandler(this.userCustomIP4_ValueChanged);
+            // 
+            // userCustomIP3
+            // 
+            this.userCustomIP3.Location = new System.Drawing.Point(178, 52);
+            this.userCustomIP3.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP3.Name = "userCustomIP3";
+            this.userCustomIP3.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP3.TabIndex = 9;
+            this.userCustomIP3.ValueChanged += new System.EventHandler(this.userCustomIP3_ValueChanged);
+            // 
+            // userCustomIP2
+            // 
+            this.userCustomIP2.Location = new System.Drawing.Point(134, 52);
+            this.userCustomIP2.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP2.Name = "userCustomIP2";
+            this.userCustomIP2.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP2.TabIndex = 8;
+            this.userCustomIP2.ValueChanged += new System.EventHandler(this.userCustomIP2_ValueChanged);
+            // 
+            // userCustomIP1
+            // 
+            this.userCustomIP1.Location = new System.Drawing.Point(90, 52);
+            this.userCustomIP1.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.userCustomIP1.Name = "userCustomIP1";
+            this.userCustomIP1.Size = new System.Drawing.Size(38, 20);
+            this.userCustomIP1.TabIndex = 7;
+            this.userCustomIP1.ValueChanged += new System.EventHandler(this.userCustomIP1_ValueChanged);
+            // 
             // userCustomIP
             // 
             this.userCustomIP.AutoSize = true;
@@ -192,58 +244,6 @@
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             this.radioButton1.Click += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // userCustomIP1
-            // 
-            this.userCustomIP1.Location = new System.Drawing.Point(90, 52);
-            this.userCustomIP1.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.userCustomIP1.Name = "userCustomIP1";
-            this.userCustomIP1.Size = new System.Drawing.Size(38, 20);
-            this.userCustomIP1.TabIndex = 7;
-            this.userCustomIP1.ValueChanged += new System.EventHandler(this.userCustomIP1_ValueChanged);
-            // 
-            // userCustomIP2
-            // 
-            this.userCustomIP2.Location = new System.Drawing.Point(134, 52);
-            this.userCustomIP2.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.userCustomIP2.Name = "userCustomIP2";
-            this.userCustomIP2.Size = new System.Drawing.Size(38, 20);
-            this.userCustomIP2.TabIndex = 8;
-            this.userCustomIP2.ValueChanged += new System.EventHandler(this.userCustomIP2_ValueChanged);
-            // 
-            // userCustomIP3
-            // 
-            this.userCustomIP3.Location = new System.Drawing.Point(178, 52);
-            this.userCustomIP3.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.userCustomIP3.Name = "userCustomIP3";
-            this.userCustomIP3.Size = new System.Drawing.Size(38, 20);
-            this.userCustomIP3.TabIndex = 9;
-            this.userCustomIP3.ValueChanged += new System.EventHandler(this.userCustomIP3_ValueChanged);
-            // 
-            // userCustomIP4
-            // 
-            this.userCustomIP4.Location = new System.Drawing.Point(222, 52);
-            this.userCustomIP4.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.userCustomIP4.Name = "userCustomIP4";
-            this.userCustomIP4.Size = new System.Drawing.Size(38, 20);
-            this.userCustomIP4.TabIndex = 10;
-            this.userCustomIP4.ValueChanged += new System.EventHandler(this.userCustomIP4_ValueChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -262,10 +262,10 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userCustomIP4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userCustomIP1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
