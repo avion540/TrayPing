@@ -286,7 +286,7 @@ namespace TrayPing
             + "\nPing will not be 100% accurate."
             + "\nOrange M means your ping is > " +pingLow 
             + "\nRed H means your ping is > " + pingMid 
-            + "\n\nErrors:\nRed E means there was an error while trying to ping.\n");
+            + "\nRed E means there was an error while trying to ping.\n");
         }
 
         // Right click tray, Options
@@ -448,21 +448,29 @@ namespace TrayPing
 
         }
 
-        // Right click, Launch on Startup
-        private void launchOnStartupToolStripMenuItem_Click(object sender, EventArgs e)
+        // Call winsparkle update process with UI
+        private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*RegistryKey registryKey = Registry.CurrentUser.OpenSubKey
-        ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (isChecked)
+            WinSparkle.win_sparkle_check_update_with_ui();
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+        
+        // Launch on Startup menu item
+        private void launchOnStartupToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (launchOnStartupToolStripMenuItem.Checked)
             {
-                registryKey.SetValue("ApplicationName", Application.ExecutablePath);
+                key.SetValue("TrayPing", Application.ExecutablePath.ToString());
             }
             else
             {
-                registryKey.DeleteValue("ApplicationName");
-            }*/
+                key.DeleteValue("TrayPing", false);
+            }
         }
-
-
     }
 }
