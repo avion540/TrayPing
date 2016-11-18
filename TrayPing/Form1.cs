@@ -98,7 +98,7 @@ namespace TrayPing
             }
             else
             {
-                this.pingLabel.Text = stuff;
+                pingLabel.Text = stuff;
             }
         }
         
