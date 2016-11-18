@@ -1,25 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
-// Figure out why .net error is thrown after clicking Exit...sometimes.
+// Figure out why "Collection was modified; enumeration operation may not execute" error is thrown after clicking Exit...sometimes.
 // Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
-// Add ability to manually check for updates
 // Add basic tray text color switch option
-// Add option to enter custom IP to ping
-// Add option to open application on startup
 
 namespace TrayPing
 {
