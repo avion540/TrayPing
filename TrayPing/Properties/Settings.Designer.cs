@@ -22,5 +22,16 @@ namespace TrayPing.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Windows.Forms.RadioButton radioChoice {
+            get {
+                return ((global::System.Windows.Forms.RadioButton)(this["radioChoice"]));
+            }
+            set {
+                this["radioChoice"] = value;
+            }
+        }
     }
 }

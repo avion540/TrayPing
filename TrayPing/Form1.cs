@@ -9,9 +9,10 @@ using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
+// Add basic tray text color switch option
+// Remember last server choice on start
 // Figure out why "Collection was modified; enumeration operation may not execute" error is thrown after clicking Exit...sometimes.
 // Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
-// Add basic tray text color switch option
 
 namespace TrayPing
 {
@@ -45,9 +46,16 @@ namespace TrayPing
 
             // Integrate WinSparkle updater
             WinSparkle.win_sparkle_set_appcast_url("https://natechung.me/trayping/appcast.xml");
-            //WinSparkle.win_sparkle_set_app_details("Company","App", "Version"); // THIS CALL NOT IMPLEMENTED YET
+            // WinSparkle.win_sparkle_set_app_details("Company","App", "Version"); // THIS CALL NOT IMPLEMENTED YET
             WinSparkle.win_sparkle_init();
-            WinSparkle.win_sparkle_check_update_with_ui();
+            
+            // Set WinSparkle to check for update every 1 hour
+            RegistryKey myKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Avion\\TrayPing\\WinSparkle", true);
+            if (myKey != null)
+            {
+                myKey.SetValue("UpdateInterval", "3600", RegistryValueKind.String);
+            }
+            myKey.Close();
         }
 
         // Import WinSparkle dll (make sure it is in the same folder as the application)
@@ -317,7 +325,7 @@ namespace TrayPing
             labelMid.Text = "Mid";
             textBoxMid.Text = "";
 
-            labelExample.Text = "green <= orange <= red";
+            labelExample.Text = "Set custom ping ranges.\ngreen <= orange <= red";
 
             buttonOk.Text = "OK";
             buttonCancel.Text = "Cancel";
@@ -463,6 +471,7 @@ namespace TrayPing
             {
                 key.DeleteValue("TrayPing", false);
             }
+            key.Close();
         }
     }
 }
