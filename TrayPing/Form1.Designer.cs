@@ -38,6 +38,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Settings_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.Show_Option = new System.Windows.Forms.ToolStripMenuItem();
+            this.launchOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Exit_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.pingUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -48,7 +49,6 @@
             this.userCustomIP = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.launchOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userCustomIP4)).BeginInit();
@@ -87,7 +87,7 @@
             this.launchOnStartupToolStripMenuItem,
             this.Exit_Option});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 142);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // Info_Option
@@ -122,6 +122,14 @@
             this.Show_Option.Size = new System.Drawing.Size(171, 22);
             this.Show_Option.Text = "Show";
             this.Show_Option.Click += new System.EventHandler(this.Show_Option_Click);
+            // 
+            // launchOnStartupToolStripMenuItem
+            // 
+            this.launchOnStartupToolStripMenuItem.CheckOnClick = true;
+            this.launchOnStartupToolStripMenuItem.Name = "launchOnStartupToolStripMenuItem";
+            this.launchOnStartupToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.launchOnStartupToolStripMenuItem.Text = "Launch on Startup";
+            this.launchOnStartupToolStripMenuItem.Click += new System.EventHandler(this.launchOnStartupToolStripMenuItem_Click_1);
             // 
             // Exit_Option
             // 
@@ -212,7 +220,6 @@
             this.userCustomIP.Name = "userCustomIP";
             this.userCustomIP.Size = new System.Drawing.Size(73, 17);
             this.userCustomIP.TabIndex = 2;
-            this.userCustomIP.TabStop = true;
             this.userCustomIP.Text = "Custom IP";
             this.userCustomIP.UseVisualStyleBackColor = true;
             this.userCustomIP.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
@@ -220,6 +227,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
             this.radioButton2.Location = new System.Drawing.Point(134, 19);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(135, 17);
@@ -233,24 +241,14 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(11, 19);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(77, 17);
             this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Open DNS";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             this.radioButton1.Click += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
-            // launchOnStartupToolStripMenuItem
-            // 
-            this.launchOnStartupToolStripMenuItem.CheckOnClick = true;
-            this.launchOnStartupToolStripMenuItem.Name = "launchOnStartupToolStripMenuItem";
-            this.launchOnStartupToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.launchOnStartupToolStripMenuItem.Text = "Launch on Startup";
-            this.launchOnStartupToolStripMenuItem.Click += new System.EventHandler(this.launchOnStartupToolStripMenuItem_Click_1);
             // 
             // MainForm
             // 
@@ -258,7 +256,9 @@
             this.ClientSize = new System.Drawing.Size(307, 143);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pingLabel);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Location", global::TrayPing.Properties.Settings.Default, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = global::TrayPing.Properties.Settings.Default.Location;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(323, 182);

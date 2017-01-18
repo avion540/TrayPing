@@ -1,25 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 // Todo:
-// Figure out why .net error is thrown after clicking Exit...sometimes.
-// Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
-// Add ability to manually check for updates
 // Add basic tray text color switch option
-// Add option to enter custom IP to ping
-// Add option to open application on startup
+// Figure out why "Collection was modified; enumeration operation may not execute" error is thrown after clicking Exit...sometimes.
+// Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
 
 namespace TrayPing
 {
@@ -41,6 +33,8 @@ namespace TrayPing
 
         int error = 0;
         bool showErrorBalloon = true;
+        // Which radio button is pressed? (1 is 0)
+        int userRadio = 0; 
 
         //Ping low and mid
         int pingLow = 80;
@@ -53,9 +47,17 @@ namespace TrayPing
 
             // Integrate WinSparkle updater
             WinSparkle.win_sparkle_set_appcast_url("https://natechung.me/trayping/appcast.xml");
-            //WinSparkle.win_sparkle_set_app_details("Company","App", "Version"); // THIS CALL NOT IMPLEMENTED YET
+            // WinSparkle.win_sparkle_set_app_details("Company","App", "Version"); // THIS CALL NOT IMPLEMENTED YET
             WinSparkle.win_sparkle_init();
-            WinSparkle.win_sparkle_check_update_with_ui();
+            
+            // Set WinSparkle to check for update every 1 hour
+            RegistryKey myKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Avion\\TrayPing\\WinSparkle", true);
+            if (myKey != null)
+            {
+                myKey.SetValue("UpdateInterval", "3600", RegistryValueKind.String);
+
+                myKey.Close();
+            }
         }
 
         // Import WinSparkle dll (make sure it is in the same folder as the application)
@@ -153,6 +155,40 @@ namespace TrayPing
                 {
 
                 }
+            }
+        }
+
+        delegate void radioCheckedHandler(CheckBox radioButton2, bool isChecked);
+        private void checkRadioChecked(CheckBox radioButton2, bool isChecked)
+        {
+            MessageBox.Show("test");
+            try
+            {
+                if (radioButton2.InvokeRequired)
+                {
+                    radioCheckedHandler d = new radioCheckedHandler(checkRadioChecked);
+                    this.Invoke(d, new object[] { radioButton2, isChecked });
+                }
+                else
+                {
+                    if (userRadio == 0)
+                    {
+                        radioButton1.Checked = true;
+                        MessageBox.Show("radio1 checked");
+
+                    }
+
+                    //radioButton1.Checked = isChecked;
+                    if (userRadio == 1)
+                    {
+                        radioButton2.Checked = true;
+                        MessageBox.Show("radio2 checked");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error checking radio");
             }
         }
 
@@ -266,9 +302,18 @@ namespace TrayPing
         // What happens when user right clicks tray icon then, Exit
         private void Exit_Option_Click(object sender, EventArgs e)
         {
+            // Save user radio selection and window location
+            Properties.Settings.Default["Location"] = this.Location;
+            Properties.Settings.Default["userRadio1"] = radioButton1.Checked;
+            Properties.Settings.Default["userRadio2"] = radioButton2.Checked;
+            Properties.Settings.Default.Save();
+
             // Remove the icon from the system tray.
             notifyIcon1.Dispose();
             WinSparkle.win_sparkle_cleanup();
+
+            // Close Application
+            Environment.Exit(1);
             // Close the main Frame
             Application.Exit();
         }
@@ -325,7 +370,7 @@ namespace TrayPing
             labelMid.Text = "Mid";
             textBoxMid.Text = "";
 
-            labelExample.Text = "green <= orange <= red";
+            labelExample.Text = "Set custom ping ranges.\ngreen <= orange <= red";
 
             buttonOk.Text = "OK";
             buttonCancel.Text = "Cancel";
@@ -393,6 +438,8 @@ namespace TrayPing
         // Main application window
         private void MainForm_Load(object sender, EventArgs e)
         {
+            radioButton1.Checked = Properties.Settings.Default.userRadio1;
+            radioButton2.Checked = Properties.Settings.Default.userRadio2;
 
         }
 
@@ -471,6 +518,7 @@ namespace TrayPing
             {
                 key.DeleteValue("TrayPing", false);
             }
+            key.Close();
         }
     }
 }
