@@ -25,12 +25,97 @@ namespace TrayPing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Windows.Forms.RadioButton radioChoice {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool userRadio1 {
             get {
-                return ((global::System.Windows.Forms.RadioButton)(this["radioChoice"]));
+                return ((bool)(this["userRadio1"]));
             }
             set {
-                this["radioChoice"] = value;
+                this["userRadio1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool userRadio2 {
+            get {
+                return ((bool)(this["userRadio2"]));
+            }
+            set {
+                this["userRadio2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100, 100")]
+        public global::System.Drawing.Point Location {
+            get {
+                return ((global::System.Drawing.Point)(this["Location"]));
+            }
+            set {
+                this["Location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool userIPradio {
+            get {
+                return ((bool)(this["userIPradio"]));
+            }
+            set {
+                this["userIPradio"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int userIPSetting1 {
+            get {
+                return ((int)(this["userIPSetting1"]));
+            }
+            set {
+                this["userIPSetting1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int userIPSetting2 {
+            get {
+                return ((int)(this["userIPSetting2"]));
+            }
+            set {
+                this["userIPSetting2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int userIPSetting3 {
+            get {
+                return ((int)(this["userIPSetting3"]));
+            }
+            set {
+                this["userIPSetting3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int userIPSetting4 {
+            get {
+                return ((int)(this["userIPSetting4"]));
+            }
+            set {
+                this["userIPSetting4"] = value;
             }
         }
     }

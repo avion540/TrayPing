@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 
 // Todo:
 // Add basic tray text color switch option
-// Remember last server choice on start
 // Figure out why "Collection was modified; enumeration operation may not execute" error is thrown after clicking Exit...sometimes.
 // Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
 
@@ -34,6 +33,8 @@ namespace TrayPing
 
         int error = 0;
         bool showErrorBalloon = true;
+        // Which radio button is pressed? (1 is 0)
+        int userRadio = 0; 
 
         //Ping low and mid
         int pingLow = 80;
@@ -54,8 +55,9 @@ namespace TrayPing
             if (myKey != null)
             {
                 myKey.SetValue("UpdateInterval", "3600", RegistryValueKind.String);
+
+                myKey.Close();
             }
-            myKey.Close();
         }
 
         // Import WinSparkle dll (make sure it is in the same folder as the application)
@@ -153,6 +155,40 @@ namespace TrayPing
                 {
 
                 }
+            }
+        }
+
+        delegate void radioCheckedHandler(CheckBox radioButton2, bool isChecked);
+        private void checkRadioChecked(CheckBox radioButton2, bool isChecked)
+        {
+            MessageBox.Show("test");
+            try
+            {
+                if (radioButton2.InvokeRequired)
+                {
+                    radioCheckedHandler d = new radioCheckedHandler(checkRadioChecked);
+                    this.Invoke(d, new object[] { radioButton2, isChecked });
+                }
+                else
+                {
+                    if (userRadio == 0)
+                    {
+                        radioButton1.Checked = true;
+                        MessageBox.Show("radio1 checked");
+
+                    }
+
+                    //radioButton1.Checked = isChecked;
+                    if (userRadio == 1)
+                    {
+                        radioButton2.Checked = true;
+                        MessageBox.Show("radio2 checked");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error checking radio");
             }
         }
 
@@ -266,9 +302,18 @@ namespace TrayPing
         // What happens when user right clicks tray icon then, Exit
         private void Exit_Option_Click(object sender, EventArgs e)
         {
+            // Save user radio selection and window location
+            Properties.Settings.Default["Location"] = this.Location;
+            Properties.Settings.Default["userRadio1"] = radioButton1.Checked;
+            Properties.Settings.Default["userRadio2"] = radioButton2.Checked;
+            Properties.Settings.Default.Save();
+
             // Remove the icon from the system tray.
             notifyIcon1.Dispose();
             WinSparkle.win_sparkle_cleanup();
+
+            // Close Application
+            Environment.Exit(1);
             // Close the main Frame
             Application.Exit();
         }
@@ -393,6 +438,8 @@ namespace TrayPing
         // Main application window
         private void MainForm_Load(object sender, EventArgs e)
         {
+            radioButton1.Checked = Properties.Settings.Default.userRadio1;
+            radioButton2.Checked = Properties.Settings.Default.userRadio2;
 
         }
 

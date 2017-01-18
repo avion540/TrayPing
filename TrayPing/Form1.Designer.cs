@@ -220,7 +220,6 @@
             this.userCustomIP.Name = "userCustomIP";
             this.userCustomIP.Size = new System.Drawing.Size(73, 17);
             this.userCustomIP.TabIndex = 2;
-            this.userCustomIP.TabStop = true;
             this.userCustomIP.Text = "Custom IP";
             this.userCustomIP.UseVisualStyleBackColor = true;
             this.userCustomIP.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
@@ -228,6 +227,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
             this.radioButton2.Location = new System.Drawing.Point(134, 19);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(135, 17);
@@ -241,12 +241,10 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(11, 19);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(77, 17);
             this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Open DNS";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
@@ -258,7 +256,9 @@
             this.ClientSize = new System.Drawing.Size(307, 143);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pingLabel);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Location", global::TrayPing.Properties.Settings.Default, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = global::TrayPing.Properties.Settings.Default.Location;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(323, 182);
