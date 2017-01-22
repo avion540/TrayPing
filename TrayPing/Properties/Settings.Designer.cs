@@ -118,5 +118,29 @@ namespace TrayPing.Properties {
                 this["userIPSetting4"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public string lowIPsetting {
+            get {
+                return ((string)(this["lowIPsetting"]));
+            }
+            set {
+                this["lowIPsetting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        public string midIPsetting {
+            get {
+                return ((string)(this["midIPsetting"]));
+            }
+            set {
+                this["midIPsetting"] = value;
+            }
+        }
     }
 }
