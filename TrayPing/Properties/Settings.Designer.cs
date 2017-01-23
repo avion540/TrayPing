@@ -25,7 +25,7 @@ namespace TrayPing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool userRadio1 {
             get {
                 return ((bool)(this["userRadio1"]));
@@ -37,7 +37,7 @@ namespace TrayPing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool userRadio2 {
             get {
                 return ((bool)(this["userRadio2"]));
@@ -49,7 +49,7 @@ namespace TrayPing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100, 100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500, 400")]
         public global::System.Drawing.Point Location {
             get {
                 return ((global::System.Drawing.Point)(this["Location"]));
@@ -121,7 +121,7 @@ namespace TrayPing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
         public string lowIPsetting {
             get {
                 return ((string)(this["lowIPsetting"]));
@@ -133,7 +133,7 @@ namespace TrayPing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public string midIPsetting {
             get {
                 return ((string)(this["midIPsetting"]));

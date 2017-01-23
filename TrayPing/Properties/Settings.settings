@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="userRadio1" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="userRadio2" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="userRadio2" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="Location" Type="System.Drawing.Point" Scope="User">
-      <Value Profile="(Default)">100, 100</Value>
+      <Value Profile="(Default)">500, 400</Value>
     </Setting>
     <Setting Name="userIPradio" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -27,10 +27,10 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="lowIPsetting" Type="System.String" Scope="User">
-      <Value Profile="(Default)">12</Value>
+      <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="midIPsetting" Type="System.String" Scope="User">
-      <Value Profile="(Default)">13</Value>
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

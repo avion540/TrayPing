@@ -427,6 +427,25 @@ namespace TrayPing
             {
                 return dialogResult;
             }
+            // If user changes both values
+            else if (textBoxLow.Text != Properties.Settings.Default.lowIPsetting && textBoxMid.Text != Properties.Settings.Default.midIPsetting)
+            {
+                try
+                {
+                    low = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
+                    mid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
+
+                    Properties.Settings.Default.lowIPsetting = textBoxLow.Text;
+                    Properties.Settings.Default.midIPsetting = textBoxMid.Text;
+                    Properties.Settings.Default.Save();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("You have done the unspeakable!\n" + e);
+                    low = 80;
+                    mid = 100;
+                }
+            }
             // If user changes only low value
             else if (textBoxLow.Text != Properties.Settings.Default.lowIPsetting)
             {
@@ -462,25 +481,7 @@ namespace TrayPing
                     mid = 100;
                 }
             }
-            // If user changes both values
-            else if (textBoxLow.Text != Properties.Settings.Default.lowIPsetting && textBoxMid.Text != Properties.Settings.Default.midIPsetting)
-            {
-                try
-                {
-                    low = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
-                    mid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
 
-                    Properties.Settings.Default.lowIPsetting = textBoxLow.Text;
-                    Properties.Settings.Default.midIPsetting = textBoxMid.Text;
-                    Properties.Settings.Default.Save();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("You have done the unspeakable!\n" + e);
-                    low = 80;
-                    mid = 100;
-                }
-            }
             /*else
             {
                 MessageBox.Show("Both settings must be changed at the same time.\n"
