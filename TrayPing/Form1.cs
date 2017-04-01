@@ -10,10 +10,11 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 // Todo:
-// Code doesn't work. String not converting to int somewhere. Possible non integer stored in setting?
+// Ping Settings reflects previous values, but the correct address is being pinged
+// Let user define custom IP's to ping in place of "League of Legends NA"
 // Add basic tray text color switch option
 // Figure out why "Collection was modified; enumeration operation may not execute" error is thrown after clicking Exit...sometimes.
-// Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
+// TrayPing might be causing Windows to make tray icons invisible. Possibly too many ping calls?
 
 namespace TrayPing
 {
@@ -117,8 +118,8 @@ namespace TrayPing
                 // but change the fragmentation behavior.
                 options.DontFragment = true;
 
-                // Create buffer "test packet" to be transmitted. 
-                string data = "test packet";
+                // Create buffer to be transmitted. 
+                string data = "aaaaaaaaaaaaaaa";
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 int timeout = 120;
                 // Use try/catch blocks to prevent unhandled exceptions when TrayPing can't ping a server or when the computer goes to sleep
@@ -133,6 +134,7 @@ namespace TrayPing
                         error = 0;
                     }
                     else
+                    // Logic error, Error tooltip will never display
                     {
                         if (error >= 10)
                         {
@@ -153,7 +155,7 @@ namespace TrayPing
                     ((IDisposable)pingSender).Dispose();
                 }
 
-                catch (Exception except)
+                catch (Exception)
                 {
 
                 }
@@ -188,7 +190,7 @@ namespace TrayPing
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error checking radio");
             }

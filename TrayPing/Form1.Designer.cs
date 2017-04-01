@@ -141,7 +141,7 @@
             // pingUpdateTimer
             // 
             this.pingUpdateTimer.Enabled = true;
-            this.pingUpdateTimer.Interval = 1000;
+            this.pingUpdateTimer.Interval = 2000;
             this.pingUpdateTimer.Tick += new System.EventHandler(this.pingUpdateTimer_Tick);
             // 
             // groupBox1
