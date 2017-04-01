@@ -7,11 +7,14 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 // Todo:
+// Ping Settings reflects previous values, but the correct address is being pinged
+// Let user define custom IP's to ping in place of "League of Legends NA"
 // Add basic tray text color switch option
 // Figure out why "Collection was modified; enumeration operation may not execute" error is thrown after clicking Exit...sometimes.
-// Figure out where program is leaking handles (might actually be working as intended. GC brings handles back down to ~300 when it reaches ~3000)
+// TrayPing might be causing Windows to make tray icons invisible. Possibly too many ping calls?
 
 namespace TrayPing
 {
@@ -34,11 +37,11 @@ namespace TrayPing
         int error = 0;
         bool showErrorBalloon = true;
         // Which radio button is pressed? (1 is 0)
-        int userRadio = 0; 
+        int userRadio = 0;
 
         //Ping low and mid
-        int pingLow = 80;
-        int pingMid = 100;
+        int pingLow = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
+        int pingMid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
 
         public MainForm()
         {
@@ -115,8 +118,8 @@ namespace TrayPing
                 // but change the fragmentation behavior.
                 options.DontFragment = true;
 
-                // Create buffer "test packet" to be transmitted. 
-                string data = "test packet";
+                // Create buffer to be transmitted. 
+                string data = "aaaaaaaaaaaaaaa";
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 int timeout = 120;
                 // Use try/catch blocks to prevent unhandled exceptions when TrayPing can't ping a server or when the computer goes to sleep
@@ -131,6 +134,7 @@ namespace TrayPing
                         error = 0;
                     }
                     else
+                    // Logic error, Error tooltip will never display
                     {
                         if (error >= 10)
                         {
@@ -151,7 +155,7 @@ namespace TrayPing
                     ((IDisposable)pingSender).Dispose();
                 }
 
-                catch (Exception except)
+                catch (Exception)
                 {
 
                 }
@@ -186,7 +190,7 @@ namespace TrayPing
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error checking radio");
             }
@@ -302,10 +306,14 @@ namespace TrayPing
         // What happens when user right clicks tray icon then, Exit
         private void Exit_Option_Click(object sender, EventArgs e)
         {
+            string pingLowString = pingLow.ToString();
+            string pingMidString = pingMid.ToString();
             // Save user radio selection and window location
             Properties.Settings.Default["Location"] = this.Location;
             Properties.Settings.Default["userRadio1"] = radioButton1.Checked;
             Properties.Settings.Default["userRadio2"] = radioButton2.Checked;
+            Properties.Settings.Default["lowIPsetting"] = pingLowString;//lowIPsetting;
+            Properties.Settings.Default["midIPsetting"] = pingMidString; // midIPsetting;
             Properties.Settings.Default.Save();
 
             // Remove the icon from the system tray.
@@ -337,18 +345,25 @@ namespace TrayPing
         // Right click tray, Options
         private void Settings_Option_Click(object sender, EventArgs e)
         {
-            int low = 80;
-            int mid = 100;
+            int low = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
+            int mid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
+
             if (InputBox(ref low, ref mid) == DialogResult.OK)
             {
                 MessageBox.Show("Settings have been changed.\n"
                     + "Low(green) is now <= " + low + "\n"
-                    + "Mid(orange) is now " + low + "< orange <= " + mid + "\n"
+                    + "Mid(orange) is now " + low + " < orange <= " + mid + "\n"
                     + "And high(red) ping will be anything above " + mid + ".");
 
                 pingLow = low;
                 pingMid = mid;
             }
+        }
+
+        private void txtType1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int isNumber = 0;
+            e.Handled = !int.TryParse(e.KeyChar.ToString(), out isNumber);
         }
 
         // Results of user changing Options
@@ -365,10 +380,10 @@ namespace TrayPing
 
             form.Text = "Set Ping";
             labelLow.Text = "Low";
-            textBoxLow.Text = "";
+            textBoxLow.Text = Properties.Settings.Default.lowIPsetting;
 
             labelMid.Text = "Mid";
-            textBoxMid.Text = "";
+            textBoxMid.Text = Properties.Settings.Default.midIPsetting;
 
             labelExample.Text = "Set custom ping ranges.\ngreen <= orange <= red";
 
@@ -409,25 +424,71 @@ namespace TrayPing
             form.CancelButton = buttonCancel;
 
             DialogResult dialogResult = form.ShowDialog();
-            if (textBoxLow.Text != "" && textBoxMid.Text != "")
+            // If user did not change values, simply exit form
+            if (textBoxLow.Text == Properties.Settings.Default.lowIPsetting && textBoxMid.Text == Properties.Settings.Default.midIPsetting) 
+            {
+                return dialogResult;
+            }
+            // If user changes both values
+            else if (textBoxLow.Text != Properties.Settings.Default.lowIPsetting && textBoxMid.Text != Properties.Settings.Default.midIPsetting)
             {
                 try
                 {
-                    low = int.Parse(textBoxLow.Text);
-                    mid = int.Parse(textBoxMid.Text);
+                    low = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
+                    mid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
+
+                    Properties.Settings.Default.lowIPsetting = textBoxLow.Text;
+                    Properties.Settings.Default.midIPsetting = textBoxMid.Text;
+                    Properties.Settings.Default.Save();
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("You have done the unspeakable!\n" + e);
-                    low = 90;
-                    mid = 150;
+                    low = 80;
+                    mid = 100;
                 }
             }
-            else
+            // If user changes only low value
+            else if (textBoxLow.Text != Properties.Settings.Default.lowIPsetting)
+            {
+                try
+                {
+                    low = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
+
+                    Properties.Settings.Default.lowIPsetting = textBoxLow.Text;
+                    Properties.Settings.Default.Save();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("You have done the unspeakable!\n" + e);
+                    low = 80;
+                    mid = 100;
+                }
+            }
+            // If user changes only mid value
+            else if (textBoxMid.Text != Properties.Settings.Default.midIPsetting)
+            {
+                try
+                {
+                    mid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
+                    //mid = int.Parse(Regex.Replace(pingMidString, "[^0-9]+", string.Empty));
+
+                    Properties.Settings.Default.midIPsetting = textBoxMid.Text;
+                    Properties.Settings.Default.Save();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("You have done the unspeakable!\n" + e);
+                    low = 80;
+                    mid = 100;
+                }
+            }
+
+            /*else
             {
                 MessageBox.Show("Both settings must be changed at the same time.\n"
-                + "Reverting back to defaults.");
-            }
+                + "Reverting back to previous values.");
+            }*/
             return dialogResult;
         }
 
@@ -441,6 +502,8 @@ namespace TrayPing
             radioButton1.Checked = Properties.Settings.Default.userRadio1;
             radioButton2.Checked = Properties.Settings.Default.userRadio2;
 
+            pingLow = int.Parse(Regex.Match(Properties.Settings.Default.lowIPsetting, @"\d+").Value);
+            pingMid = int.Parse(Regex.Match(Properties.Settings.Default.midIPsetting, @"\d+").Value);
         }
 
         // Radio button 1
