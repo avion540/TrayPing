@@ -24,12 +24,12 @@ namespace TrayPing
         bool showMinMessage = true;
 
         // Set ip address to localhost to later be replaced with custom IP
-        int ip1 = 107;
+        int ip1 = 127;
         int ip2 = 0;
         int ip3 = 0;
         int ip4 = 1;
 
-        int userIP1 = 107;
+        int userIP1 = 127;
         int userIP2 = 0;
         int userIP3 = 0;
         int userIP4 = 1;
@@ -509,10 +509,10 @@ namespace TrayPing
         // Radio button 1
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            ip1 = 208;
-            ip2 = 67;
-            ip3 = 222;
-            ip4 = 222;
+            ip1 = 1;
+            ip2 = 1;
+            ip3 = 1;
+            ip4 = 1;
         }
 
         // Radio button 2
