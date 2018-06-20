@@ -1,0 +1,101 @@
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+	<channel>
+		<title>TrayPing</title>
+		<link>
+		https://github.com/avion540/TrayPing/tree/master/TrayPing/appcast.xml
+		</link>
+		<description>Slowly going insane</description>
+		<language>en</language>
+		<item>
+			<title>Version 0.7.8.0 (0 bugs fixed; 1 new feature)</title>
+			<description>
+				<![CDATA[
+				<h4>0.7.8.0>/h4>
+				<ul>
+					<li>Changed to ping every 2000ms instead of 1000ms to trying preventing icon from going invisible. Strangely no documentation on this problem, if anyone knows why this is happening, please help me out.</li>
+					<li>Changed from OpenDNS to Cloudflare's 1.1.1.1</li>
+				</ul>
+				<h4>0.7.6.0</h4>
+				<ul>
+					<li>Application location and user radio selection is now saved through relaunch. Didn't even know you needed that, did ya? Mwahaha. You're welcome.</li>
+				</ul>
+				<h4>0.7.5.1</h4>
+				<ul>
+					<li>I was getting really annoyed with having to click twice everytime I logged in so I got rid of the "YOU ARE UP TO DATE" window. grrrrrr</li>
+				</ul>
+				<h4>0.7.5</h4>
+				<ul>
+					<li>Added option to start TrayPing on Windows startup.</li>
+					<li>Added option to check for updates manually.</li>
+					<li>I'm bored. Can I play league now</li>
+				</ul>
+				<h4>0.7.4.1</h4>
+				<ul>
+					<li>New icon. No more anime girl :(</li>
+				</ul>
+				<h4>0.7.4</h4>
+				<ul>
+					<li>Added radio button to input custom IP address, but there's a slight trick to it.
+					You have to input the custom IP before hitting the Custom IP buttom or it won't go through.
+					You could also click the button, change the adress, then click the button again, but that seems like a lot of work.</li>
+					<li>Changed default DNS to Open DNS because I feel like Google is spying on my pings....In other news, I'm wearing my purple tinfoil hat today! I love it.</li>
+				</ul>
+				<h4>0.7.3.2</h4>
+				<ul>
+					<li>TrayPing doesn't crash anymore when coming out of sleep. Thank goodness, car repairs were getting expensive</li>
+				</ul>
+				<h4>0.7.3.1</h4>
+				<ul>
+					<li>Fixed auto-updater not fully exiting application. TrayPing will now reopen after update as well.</li>
+					<li>For some reason, ping lower than pingMid was set to pt 9 font, idk why. Changed to pt 8 font.</li>
+				</ul>
+				<h4>0.7.3</h4>
+				<ul>
+					<li>Fixed bug where the generated bitmap icons weren't being destroyed properly. This lead to the app eventually crashing because Windows thought it was too fat. MY APP IS HEALTHY AT EVERY SIZE WINDOWS!!! grrrr</li>
+				</ul>
+				<h4>0.7.2</h4>
+				<ul>
+					<li>TrayPing now shows accurate ping! No longer goes by increments of five! ^_^</li>
+					<li>Re-implemented Settings. You can change the color thresh-hold. i.e. if you want TrayPing to be green when the ping is below 20 and orange when between 20 and 100, you can now do that :)</li>
+				</ul>
+				<h4>0.7.1</h4>
+				<ul>
+					<li>Fixed a bug where app would crash because it would try to access an image file in another thread.</li>
+					<li>Fixed a bug that caused an error while pinging. At least I think I fixed it.</li>
+				</ul>
+				<br>
+				<h4>0.7.0</h4>
+				<ul>
+					<li>Added auto-updater :D</li>
+				</ul>
+				<br>
+				<h4>0.6.0</h4>
+				<ul>
+					<li>Added an option to switch servers between Google DNS and League's NA server</li>
+					<li>Found a huge ass memory leak. Like, the application was growing 0.1MB every second. So uh...now it doesn't do that</li>
+					<li>Fixed a bug where ping higher than 95 would result in a blank icon. I blame Taylor</li>
+				</ul>
+				<br>
+				<h4>0.5.1</h4>
+				<ul>
+					<li>Made tray text pretty...er</li>
+					<li>Tray number now changes to Orange when ping is higher than 80 and Red when ping is higher than 95</li>
+					<li>Added option to resize window just for you Austin</li>
+					<li>Included uninstall option</li>
+				</ul>
+				<br>
+				<h4>0.5.0</h4>
+				<ul>
+					<li>Added automatic generation of taskbar ping numbers</li>
+				</ul>
+				]]>
+			</description>
+			<pubDate>Wed, 18 Jan 2017 14:08:00 PST</pubDate>
+			<enclosure url="https://github.com/avion540/TrayPing/releases/download/0.7.8/TrayPing0.7.8.0.exe"
+				sparkle:version="0.7.8.0"
+				length="0"
+				type="application/octet-stream"
+				sparkle:installerArguments="/SILENT /SP- /force"/>
+		</item>
+	</channel>
+</rss>
